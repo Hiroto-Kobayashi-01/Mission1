@@ -13,26 +13,96 @@
    * 上記のいずれでもない場合は、その数字をそのまま出力する。  
 <br>
 
-## 作業実行方法
- 1-1. 「Mission1」フォルダをダウンロードする。  
+## 課題実行方法
+ ### 環境構築
+  1.Homebrewのインストール(以下参照)
+  > https://aiacademy.jp/media/?p=2817
 
- 1-2. ターミナルを起動し保存したフォルダがあるディレクトリに移動する。
- > 例:cd Desktop/Mission1  
+ 2.rbenvのインストール
+ ターミナルで以下のコマンドを入力
+ > brew install rbenv
 
- 1-3. 「ruby」コマンドを使いスクリプトを実行する。
- * ファイル名が「FizzBuzz.rb」の為、ターミナルに以下の文を入力しEnterを押す。
- > ruby FizzBuzz.rb  
+ 3.rubyのインストール
+ * ターミナルで以下のコマンドを入力
+ > rbenv install --list
 
- 1-4. ターミナル上にFizzBuzz問題の解答が出力される。  
-<br>
-<br>
+ * Rubyのダウンロード可能なバージョンが書かれているので最新バージョンを選びダウンロードする
+> rbenv install 3.3.0(←例)
 
- 2-1. 以下のコマンドを参照にRspecをダウンロードする。  
+ * ダウンロードしたrubyを利用するために以下のコマンドを入力
+> rbenv global 3.3.0(←例)
+
+---
+
+### 課題1-1
+
+1-1. フォルダを作成し任意のテキストエディタで開く
+
+1-2. エディタでファイル(FizzBuzz.rb)を作成し以下のコードを入力する
+
+```
+def fizz_buzz(number)
+    if number % 15 == 0
+        "fizz buzz"
+    elsif number % 3 == 0
+        "fizz"
+    elsif number % 5 == 0
+        "buzz"
+    else
+         number
+    end
+end
+
+(1..100).each{ |i| p fizz_buzz(i)}
+```
+
+ 1-3. ターミナルで上記のコードが保存されているディレクトリに移動し、以下のコマンドを実施するとFizzBuzz問題が出力される。
+ > ruby FizzBuzz.rb
+
+---
+
+### 課題1-2
+
+ 2-1. 以下のコマンドでRspecのgemをダウンロードする。  
  > gem install rspec
 
- 2-2. 1-2の手順を行う。  
+ 2-2. 以下のコマンドでGemfileを作成する
+ > bundle init
 
- 2-3. ターミナルで以下のコマンドを実施し、Rspecのテストを実行する。
- > rspec  
+*　作成されたGemfileに以下を追記しbundle installを実行する
+> gem "rspec"
 
- 2-4. ターミナル上に、「spec」フォルダ内にある「fizz_Buzz_spec.rb」で定義した3つの単体テストの結果が出力される。  
+> bundle install
+
+* 以下のコマンドを入力し作成されたspecディレクトリで設定を行う
+> bundle exec rspec --init
+
+ 2-3. specディレクトリ内にテストファイル(fizz_buzz_spec.rb)を作成する
+  * ファイルに以下のコードを入力する
+
+```
+require_relative '../FizzBuzz'
+
+RSpec.describe "FizzBuzz" do
+    it 'returns "fizz buzz" when the number is divisible by 15' do
+        expect(fizz_buzz(15)).to eq('fizz buzz')
+        expect(fizz_buzz(30)).to eq('fizz buzz')
+    end
+
+    it 'returns "fizz" when the number is divisible by 3' do
+        expect(fizz_buzz(3)).to eq('fizz')
+        expect(fizz_buzz(6)).to eq('fizz')
+        expect(fizz_buzz(9)).to eq('fizz')
+    end
+
+    it 'returns "buzz" when the number is divisible by 5' do
+        expect(fizz_buzz(5)).to eq('buzz')
+        expect(fizz_buzz(10)).to eq('buzz')
+        expect(fizz_buzz(20)).to eq('buzz')
+    end
+end
+
+```
+
+ 2-4. 以下のコマンドを入力すると「fizz_Buzz_spec.rb」で定義した3つの単体テストの結果が出力される。  
+ > bundle exec rspec
