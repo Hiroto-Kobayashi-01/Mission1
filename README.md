@@ -70,7 +70,7 @@ end
  > bundle init
 
 *　作成されたGemfileに以下を追記しbundle installを実行する
-> gem "rspec"
+> gem 'rspec'
 
 > bundle install
 
